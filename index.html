@@ -1,450 +1,280 @@
-colors: {
-                        primary: '#d47f96',
-                        secondary: '#eabac5',
-                        accent: '#fcedf0',
-                        dark: '#4b3c40',
-                        background: '#fffafb'
-                    }
-                }
-            }
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academic Portfolio | Tidsawan Srisat</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Kanit', 'sans-serif'],
-                    },
-    </script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Kanit', sans-serif;
-            background-color: #fffafb;
-        }
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #fcedf0; }
-        ::-webkit-scrollbar-thumb { background: #eabac5; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d47f96; }
-        .page-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        body { font-family: 'Kanit', sans-serif; }
+        .page-section { display: none; animation: fadeIn 0.5s ease-in-out; }
         .page-section.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .nav-link.active {
-            color: #d47f96;
-            font-weight: 600;
-            border-bottom: 2px solid #d47f96;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Custom Blue Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #eff6ff; }
+        ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
     </style>
 </head>
-<body class="text-gray-800 antialiased leading-relaxed min-h-screen flex flex-col bg-background">
+<body class="bg-blue-50 text-slate-800">
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 max-w-5xl">
-            <div class="flex justify-between items-center h-16">
-                <a href="#" onclick="showPage('home')" class="flex items-center gap-2 text-primary font-bold text-xl tracking-wider">
-                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">TS</div>
-                    <span class="hidden sm:block uppercase">Tidsawan Srisat</span>
-                </a>
-                <nav class="hidden md:flex space-x-8">
-                    <button onclick="showPage('home')" id="nav-home" class="nav-link active py-4 text-gray-600 hover:text-primary transition-colors focus:outline-none">ข้อมูลส่วนตัว</button>
-                    <button onclick="showPage('education')" id="nav-education" class="nav-link py-4 text-gray-600 hover:text-primary transition-colors focus:outline-none">ประวัติการศึกษา</button>
-                    <button onclick="showPage('experience')" id="nav-experience" class="nav-link py-4 text-gray-600 hover:text-primary transition-colors focus:outline-none">ประสบการณ์และผลงาน</button>
-                </nav>
-                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-primary focus:outline-none p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-xl font-bold tracking-wider">PORTFOLIO.</div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="showPage('page-home')" class="nav-btn hover:text-blue-300 font-medium transition" data-target="page-home">หน้าแรก</button>
+                    <button onclick="showPage('page-education')" class="nav-btn hover:text-blue-300 font-medium transition" data-target="page-education">ประวัติการศึกษา</button>
+                    <button onclick="showPage('page-experience')" class="nav-btn hover:text-blue-300 font-medium transition" data-target="page-experience">ประสบการณ์และผลงาน</button>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-white hover:text-blue-300 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-4 space-y-1 shadow-lg absolute w-full">
-            <button onclick="showPage('home'); closeMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">ข้อมูลส่วนตัว</button>
-            <button onclick="showPage('education'); closeMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">ประวัติการศึกษา</button>
-            <button onclick="showPage('experience'); closeMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">ประสบการณ์และผลงาน</button>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-800 pb-4">
+            <button onclick="showPage('page-home'); toggleMobileMenu()" class="block w-full text-left px-6 py-2 hover:bg-blue-700">หน้าแรก</button>
+            <button onclick="showPage('page-education'); toggleMobileMenu()" class="block w-full text-left px-6 py-2 hover:bg-blue-700">ประวัติการศึกษา</button>
+            <button onclick="showPage('page-experience'); toggleMobileMenu()" class="block w-full text-left px-6 py-2 hover:bg-blue-700">ประสบการณ์และผลงาน</button>
         </div>
-    </header>
+    </nav>
 
-    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
-        
-        <!-- ============================================== -->
-        <!-- HOME PAGE -->
-        <!-- ============================================== -->
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8 md:py-12">
+
+        <!-- ================= PAGE 1: HOME / PROFILE ================= -->
         <section id="page-home" class="page-section active">
-            
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col md:flex-row">
-                
-                <div class="bg-primary text-white w-full md:w-2/5 p-8 md:p-12 flex flex-col items-center justify-center text-center relative">
-                    <!-- GPA Badge -->
-                    <div class="absolute top-6 right-6 bg-accent text-primary border border-secondary font-bold px-4 py-2 rounded-full shadow-lg transform rotate-3 flex flex-col leading-tight">
-                        <span class="text-xs">GPAX</span>
-                        <span class="text-xl">4.00</span>
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row">
+                <!-- Left Sidebar -->
+                <div class="md:w-1/3 bg-blue-900 text-white p-8 flex flex-col items-center text-center">
+                    <div class="w-48 h-48 rounded-full border-4 border-white overflow-hidden shadow-xl mb-6 bg-blue-100">
+                        <!-- ใส่รูปภาพหน้าแรก -->
+                        <img src="IMG_4294.jpg" alt="Profile Picture" class="w-full h-full object-cover">
                     </div>
-
-                    <div class="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl mb-8 flex-shrink-0 bg-secondary flex items-center justify-center">
-                        <img src="IMG_4294.jpg" alt="Tidsawan Srisat Profile" class="w-full h-full object-cover object-top">
-                    </div>
-
-                    <h1 class="text-3xl md:text-4xl font-bold mb-2 tracking-wide uppercase">Tidsawan</h1>
-                    <h2 class="text-2xl md:text-3xl font-light text-white/80 tracking-widest uppercase mb-6">Srisat</h2>
+                    <h2 class="text-2xl font-bold mb-2">ธฤษวรรณ ศรีสัตย์</h2>
+                    <p class="text-blue-200 font-light tracking-wide mb-6">TIDSAWAN SRISAT</p>
                     
-                    <p class="text-sm md:text-base font-light text-white/90 max-w-xs mx-auto italic">
-                        "Academic Portfolio"
-                    </p>
+                    <div class="w-full text-left space-y-4 mt-4 border-t border-blue-700 pt-6">
+                        <h3 class="text-lg font-semibold border-b border-blue-700 pb-2 mb-3"><i class="fas fa-address-card mr-2"></i> ข้อมูลติดต่อ</h3>
+                        <p class="text-sm flex items-start"><i class="fas fa-envelope mt-1 mr-3 w-4"></i> 69202302041@scphkk.ac.th</p>
+                        <p class="text-sm flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 w-4"></i> 56 หมู่ 2 ตำบลหนองสิม อำเภอบรบือ จังหวัดมหาสารคาม 44130</p>
+                    </div>
+
+                    <div class="w-full text-left space-y-4 mt-6 border-t border-blue-700 pt-6">
+                        <h3 class="text-lg font-semibold border-b border-blue-700 pb-2 mb-3"><i class="fas fa-language mr-2"></i> ภาษา</h3>
+                        <ul class="text-sm space-y-2 list-inside">
+                            <li><i class="fas fa-check text-blue-400 mr-2"></i> ภาษาไทย (Thai)</li>
+                            <li><i class="fas fa-check text-blue-400 mr-2"></i> ภาษาอังกฤษ (English)</li>
+                            <li><i class="fas fa-check text-blue-400 mr-2"></i> ภาษาจีน (Chinese)</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="w-full md:w-3/5 p-8 md:p-12 bg-white">
+                <!-- Right Content -->
+                <div class="md:w-2/3 p-8 md:p-12 bg-white">
+                    <h1 class="text-4xl md:text-5xl font-bold text-blue-900 mb-6">Academic Portfolio</h1>
                     
-                    <div class="mb-10">
-                        <h3 class="text-xl font-bold text-primary border-b-2 border-gray-100 pb-2 mb-6 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            ช่องทางการติดต่อ (Contact)
-                        </h3>
-                        <div class="space-y-4 text-gray-600">
-                            <!-- Removed phone number block here -->
-                            <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-primary/10 p-2 rounded-full text-primary">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                </div>
-                                <span class="font-medium break-all">69202302041@scphkk.ac.th</span>
-                            </div>
-                            <div class="flex items-start gap-4 p-3 bg-gray-50 rounded-lg">
-                                <div class="bg-primary/10 p-2 rounded-full text-primary flex-shrink-0 mt-1">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                </div>
-                                <span class="font-medium leading-relaxed">56 หมู่2 ตำบลหนองสิม อำเภอบรบือ<br>จังหวัดมหาสารคาม 44130</span>
-                            </div>
-                        </div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-blue-800 mb-3 flex items-center"><i class="fas fa-user-circle mr-2"></i> เกี่ยวกับฉัน</h3>
+                        <p class="text-slate-600 leading-relaxed bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                            ฉันเป็นคนเป็นมิตรและเข้ากับคนอื่นได้ดี มีความมุ่งมั่นในการเรียนรู้และพัฒนาตนเองอยู่เสมอ ปัจจุบันกำลังศึกษาระดับปริญญาตรี มีความสนใจในด้านวิทยาศาสตร์ สุขภาพ และการช่วยเหลือสังคม พร้อมที่จะนำความรู้และประสบการณ์มาประยุกต์ใช้ในการทำงานจริง
+                        </p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        
-                        <div class="md:col-span-2">
-                            <h3 class="text-lg font-bold text-gray-800 border-l-4 border-primary pl-3 mb-4">เกี่ยวกับฉัน</h3>
-                            <p class="text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-100 leading-relaxed">
-                                นักเรียนโครงการห้องเรียนพิเศษวิทยาศาสตร์ คณิตศาสตร์ เทคโนโลยี และสิ่งแวดล้อม (SMTE) โรงเรียนบรบือวิทยาคาร 
-                                <strong>ผลการเรียนเฉลี่ยสะสม (GPAX) 4.00 อันดับที่ 1 ของระดับชั้น</strong> 
-                                มีความสนใจอย่างยิ่งในด้านวิทยาศาสตร์ สาธารณสุข และการทำโครงงานวิจัย มุ่งมั่นพัฒนาตนเองผ่านกิจกรรมค่ายวิชาการและการแข่งขันระดับชาติ พร้อมทักษะความเป็นผู้นำและการทำงานเป็นทีม
-                            </p>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-blue-800 mb-3 flex items-center"><i class="fas fa-star mr-2"></i> ทักษะและคุณสมบัติส่วนบุคคล</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200 shadow-sm"><i class="fas fa-users mr-1"></i> ทำงานร่วมกับผู้อื่นได้ดี</span>
+                            <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200 shadow-sm"><i class="fas fa-clock mr-1"></i> ตรงต่อเวลาและน่าเชื่อถือ</span>
+                            <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200 shadow-sm"><i class="fas fa-flag mr-1"></i> มีทักษะความเป็นผู้นำ</span>
+                            <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200 shadow-sm"><i class="fas fa-hands-helping mr-1"></i> จิตอาสาและบริการสังคม</span>
+                            <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200 shadow-sm"><i class="fas fa-flask mr-1"></i> กระบวนการทางวิทยาศาสตร์</span>
                         </div>
-
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800 border-l-4 border-primary pl-3 mb-4">ภาษา (Languages)</h3>
-                            <div class="space-y-3 bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="text-gray-700 font-medium">English</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-secondary h-2 rounded-full" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="text-gray-700 font-medium">Chinese</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-secondary h-2 rounded-full" style="width: 60%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-800 border-l-4 border-primary pl-3 mb-4">จุดเด่น & ทักษะ</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-accent text-primary px-3 py-1 rounded-full text-sm font-medium border border-secondary/50">Science Project</span>
-                                <span class="bg-accent text-primary px-3 py-1 rounded-full text-sm font-medium border border-secondary/50">Physics</span>
-                                <span class="bg-accent text-primary px-3 py-1 rounded-full text-sm font-medium border border-secondary/50">Leadership</span>
-                                <span class="bg-accent text-primary px-3 py-1 rounded-full text-sm font-medium border border-secondary/50">Public Health</span>
-                                <span class="bg-accent text-primary px-3 py-1 rounded-full text-sm font-medium border border-secondary/50">Teamwork</span>
-                            </div>
-                        </div>
-
+                    </div>
+                    
+                    <div class="mt-10 text-right">
+                        <button onclick="showPage('page-education')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition shadow-md">ถัดไป: ประวัติการศึกษา <i class="fas fa-arrow-right ml-2"></i></button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="mt-8 text-center">
-                <button onclick="showPage('education')" class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white px-8 py-3 rounded-full font-medium transition-colors shadow-md hover:shadow-lg">
-                    ดูประวัติการศึกษา
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </button>
             </div>
         </section>
 
-        <!-- ============================================== -->
-        <!-- EDUCATION PAGE -->
-        <!-- ============================================== -->
+        <!-- ================= PAGE 2: EDUCATION ================= -->
         <section id="page-education" class="page-section">
-            
-            <div class="mb-8 text-center">
-                <h2 class="text-3xl font-bold text-primary uppercase tracking-wide inline-block relative">
-                    ประวัติการศึกษา
-                    <div class="absolute w-1/2 h-1 bg-secondary bottom-0 left-1/4 -mb-2 rounded-full"></div>
-                </h2>
-                <p class="text-gray-500 mt-4">Educational Background</p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm p-8 md:p-12 border border-gray-100">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border-t-8 border-blue-600">
+                <h2 class="text-3xl font-bold text-blue-900 mb-8 text-center"><i class="fas fa-graduation-cap mr-3"></i>ประวัติการศึกษา</h2>
                 
-                <div class="relative max-w-3xl mx-auto">
-                    
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-1 bg-gray-200"></div>
-
-                    <!-- Item 1 (Current) -->
-                    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 group">
-                        <div class="order-2 md:order-1 md:w-5/12 ml-12 md:ml-0 md:pr-8 md:text-right w-full mt-2 md:mt-0">
-                            <h3 class="text-xl font-bold text-primary">วิทยาลัยการสาธารณสุขสิรินธร<br>จังหวัดขอนแก่น</h3>
-                            <p class="text-gray-600 font-medium mt-1">ระดับปริญญาตรี</p>
-                        </div>
-                        <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white border-4 border-primary z-10 flex items-center justify-center shadow-md">
-                            <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                        </div>
-                        <div class="order-1 md:order-3 md:w-5/12 ml-12 md:ml-0 md:pl-8 w-full">
-                            <span class="inline-block px-4 py-1.5 bg-accent text-primary font-bold rounded-full text-sm shadow-sm border border-secondary/50">ปี 2026 - ปัจจุบัน</span>
+                <div class="relative border-l-4 border-blue-200 ml-3 md:ml-6 space-y-10">
+                    <!-- Bachelor -->
+                    <div class="relative pl-6 md:pl-8">
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-blue-600 rounded-full border-4 border-white shadow"></div>
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition">
+                            <span class="text-sm font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full mb-2 inline-block">2026 - ปัจจุบัน</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">ระดับปริญญาตรี</h3>
+                            <p class="text-blue-700 font-medium text-lg mt-1">วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น</p>
                         </div>
                     </div>
 
-                    <!-- Item 2 -->
-                    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12">
-                        <div class="order-2 md:order-1 md:w-5/12 ml-12 md:ml-0 md:pr-8 md:text-right w-full mt-2 md:mt-0">
-                            <h3 class="text-xl font-bold text-gray-800">โรงเรียนบรบือวิทยาคาร</h3>
-                            <p class="text-gray-600 mt-1">มัธยมศึกษาตอนปลาย (โครงการ SMTE)</p>
-                            <p class="text-sm font-bold text-primary mt-1">เกรดเฉลี่ยสะสม (GPAX) 4.00 (อันดับ 1/288)</p>
-                        </div>
-                        <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white border-4 border-gray-300 z-10"></div>
-                        <div class="order-1 md:order-3 md:w-5/12 ml-12 md:ml-0 md:pl-8 w-full">
-                            <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 font-semibold rounded-full text-sm border border-gray-200">ปี 2023 - 2025</span>
-                        </div>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12">
-                        <div class="order-2 md:order-1 md:w-5/12 ml-12 md:ml-0 md:pr-8 md:text-right w-full mt-2 md:mt-0">
-                            <h3 class="text-xl font-bold text-gray-800">โรงเรียนบรบือวิทยาคาร</h3>
-                            <p class="text-gray-600 mt-1">มัธยมศึกษาตอนต้น</p>
-                        </div>
-                        <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white border-4 border-gray-300 z-10"></div>
-                        <div class="order-1 md:order-3 md:w-5/12 ml-12 md:ml-0 md:pl-8 w-full">
-                            <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 font-semibold rounded-full text-sm border border-gray-200">ปี 2020 - 2022</span>
+                    <!-- High School -->
+                    <div class="relative pl-6 md:pl-8">
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-blue-400 rounded-full border-4 border-white shadow"></div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <span class="text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full mb-2 inline-block">2023 - 2025</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">ระดับมัธยมศึกษาตอนปลาย</h3>
+                            <p class="text-blue-700 font-medium text-lg mt-1">โรงเรียนบรบือวิทยาคาร</p>
+                            <div class="mt-3 text-slate-600 text-sm space-y-1">
+                                <p><i class="fas fa-check-circle text-green-500 mr-2"></i>โครงการห้องเรียนพิเศษวิทยาศาสตร์ คณิตศาสตร์ เทคโนโลยีและสิ่งแวดล้อม (SMTE)</p>
+                                <p><i class="fas fa-award text-yellow-500 mr-2"></i>ผลการเรียนเฉลี่ยสะสม (GPAX): <strong class="text-blue-700 text-base">4.00</strong> (อันดับ 1 ของระดับชั้น)</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Item 4 -->
-                    <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between">
-                        <div class="order-2 md:order-1 md:w-5/12 ml-12 md:ml-0 md:pr-8 md:text-right w-full mt-2 md:mt-0">
-                            <h3 class="text-xl font-bold text-gray-800">โรงเรียนอนุบาลกิตติยา</h3>
-                            <p class="text-gray-600 mt-1">ประถมศึกษา</p>
-                        </div>
-                        <div class="absolute left-0 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white border-4 border-gray-300 z-10"></div>
-                        <div class="order-1 md:order-3 md:w-5/12 ml-12 md:ml-0 md:pl-8 w-full">
-                            <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-600 font-semibold rounded-full text-sm border border-gray-200">ปี 2014 - 2019</span>
+                    <!-- Middle School -->
+                    <div class="relative pl-6 md:pl-8">
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-blue-300 rounded-full border-4 border-white shadow"></div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <span class="text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full mb-2 inline-block">2020 - 2022</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">ระดับมัธยมศึกษาตอนต้น</h3>
+                            <p class="text-blue-700 font-medium mt-1">โรงเรียนบรบือวิทยาคาร</p>
                         </div>
                     </div>
 
+                    <!-- Primary School -->
+                    <div class="relative pl-6 md:pl-8">
+                        <div class="absolute -left-[14px] top-1 w-6 h-6 bg-slate-300 rounded-full border-4 border-white shadow"></div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <span class="text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full mb-2 inline-block">2014 - 2019</span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-2">ระดับประถมศึกษา</h3>
+                            <p class="text-blue-700 font-medium mt-1">โรงเรียนอนุบาลกิตติยา</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mt-8 flex justify-between">
-                <button onclick="showPage('home')" class="inline-flex items-center gap-2 text-gray-500 hover:text-primary px-4 py-2 font-medium transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    กลับไปข้อมูลส่วนตัว
-                </button>
-                <button onclick="showPage('experience')" class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded-full font-medium transition-colors shadow-md">
-                    ถัดไป: ประสบการณ์
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </button>
+                <div class="mt-10 flex justify-between">
+                    <button onclick="showPage('page-home')" class="text-blue-600 hover:text-blue-800 font-medium px-4 py-2"><i class="fas fa-arrow-left mr-2"></i> ย้อนกลับ</button>
+                    <button onclick="showPage('page-experience')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition shadow-md">ถัดไป: ผลงาน <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
             </div>
         </section>
 
-        <!-- ============================================== -->
-        <!-- EXPERIENCE PAGE -->
-        <!-- ============================================== -->
+        <!-- ================= PAGE 3: EXPERIENCE ================= -->
         <section id="page-experience" class="page-section">
-            
-            <div class="mb-8 text-center">
-                <h2 class="text-3xl font-bold text-primary uppercase tracking-wide inline-block relative">
-                    ประสบการณ์และผลงาน
-                    <div class="absolute w-1/2 h-1 bg-secondary bottom-0 left-1/4 -mb-2 rounded-full"></div>
-                </h2>
-                <p class="text-gray-500 mt-4">Experience, Activities & Achievements</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border-t-8 border-blue-600">
+                <h2 class="text-3xl font-bold text-blue-900 mb-8 text-center"><i class="fas fa-trophy mr-3"></i>ประสบการณ์และผลงานที่โดดเด่น</h2>
                 
-                <!-- Awards Column -->
-                <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
-                        <div class="bg-accent p-2 rounded-lg text-primary">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">รางวัลและผลงานวิชาการ</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Column 1: Awards & Competitions -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-blue-800 mb-6 border-b-2 border-blue-100 pb-2"><i class="fas fa-medal text-yellow-500 mr-2"></i> รางวัลและการแข่งขัน</h3>
+                        <ul class="space-y-4">
+                            <li class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">รางวัลเหรียญเงิน โครงงานวิทยาศาสตร์ SMTE</div>
+                                <div class="text-sm text-slate-600 mt-1">การประชุมวิชาการนักเรียนห้องเรียนพิเศษ SMTE ภาคตะวันออกเฉียงเหนือตอนบน ครั้งที่ 17 (ปี 2025)</div>
+                            </li>
+                            <li class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">รางวัลเหรียญทองแดง การแข่งขันฟิสิกส์สัประยุทธ์</div>
+                                <div class="text-sm text-slate-600 mt-1">EYPT กลุ่มภาคตะวันออกเฉียงเหนือตอนบน ครั้งที่ 11 (ปี 2025)</div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">โล่รางวัลระดับประเทศ งานมหกรรมส่งเสริมศีลธรรมฯ</div>
+                                <div class="text-sm text-slate-600 mt-1">ประกวดกิจกรรมพัฒนาผู้เรียนด้านพระพุทธศาสนา ปีที่ 6 (ปี 2024)</div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">ผ่านเกณฑ์การประเมินโครงร่างงานวิจัย YSC 2025</div>
+                                <div class="text-sm text-slate-600 mt-1">การประกวดโครงงานของนักวิทยาศาสตร์รุ่นเยาว์ ครั้งที่ 27 รอบข้อเสนอโครงการ</div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">รางวัลชมเชยระดับชาติ ประเภทกลอนสด</div>
+                                <div class="text-sm text-slate-600 mt-1">เนื่องในวันสุนทรภู่ ชิงรางวัลทายาทสุนทรภู่ (ปี 2024)</div>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="space-y-6">
-                        
-                        <div class="flex gap-4">
-                            <div class="text-primary mt-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">รางวัลระดับเหรียญเงิน (ระดับภูมิภาค)</h4>
-                                <p class="text-sm text-gray-600 mt-1">การประกวดโครงงาน ประเภทนำเสนอปากเปล่า สาขาฟิสิกส์ การประชุมวิชาการ SMTE ภาคตะวันออกเฉียงเหนือตอนบน ครั้งที่ 17 ณ โรงเรียนผดุงนารี (โครงงาน: ศักยภาพพืชดินเค็มต่อการเป็นเชื้อเพลิงชีวมวล)</p>
-                                <span class="text-sm font-semibold text-primary block mt-1">ปี 2568</span>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div class="text-secondary mt-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">ผ่านเกณฑ์ประเมินโครงร่างงานวิจัย YSC 2025</h4>
-                                <p class="text-sm text-gray-600 mt-1">รอบข้อเสนอโครงการ ภาคตะวันออกเฉียงเหนือ มหาวิทยาลัยอุบลราชธานี โครงการประกวดนักวิทยาศาสตร์รุ่นเยาว์ ครั้งที่ 27</p>
-                                <span class="text-sm font-semibold text-primary block mt-1">ปี 2567</span>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div class="text-primary mt-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">รางวัลเหรียญทองแดง การแข่งขันฟิสิกส์สัประยุทธ์ (EYPT)</h4>
-                                <p class="text-sm text-gray-600 mt-1">เครือข่ายห้องเรียนพิเศษ SMTE ภาคตะวันออกเฉียงเหนือตอนบน ครั้งที่ 11 ณ โรงเรียนขอนแก่นวิทยายน (รับหน้าที่ฝ่ายนำเสนอ ซักค้าน และวิพากษ์)</p>
-                                <span class="text-sm font-semibold text-primary block mt-1">ปี 2567</span>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div class="text-secondary mt-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">โล่รางวัลระดับประเทศ</h4>
-                                <p class="text-sm text-gray-600 mt-1">งานมหกรรมส่งเสริมศีลธรรมและกิจกรรมทางพระพุทธศาสนาเฉลิมพระเกียรติฯ ครั้งที่ 6 กิจกรรมบรรยายธรรม ปุจฉา วิสัชชนา</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div class="text-primary mt-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">รางวัลชมเชยระดับชาติ การประกวดกลอนสด</h4>
-                                <p class="text-sm text-gray-600 mt-1">ประเภทมัธยมศึกษา ชิงรางวัลทายาทสุนทรภู่ (รอบคัดเลือก ระดับชาติ)</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <div class="text-secondary mt-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">ทุนการศึกษาเรียนดีสูงสุด ลำดับ 1-5</h4>
-                                <p class="text-sm text-gray-600 mt-1">ห้องเรียนพิเศษ SMTE (ได้เกรดเฉลี่ย GPAX 4.00 อันดับ 1 ของระดับชั้น)</p>
-                            </div>
-                        </div>
-
+                    <!-- Column 2: Activities & Leadership -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-blue-800 mb-6 border-b-2 border-blue-100 pb-2"><i class="fas fa-users-cog text-blue-500 mr-2"></i> กิจกรรมและความเป็นผู้นำ</h3>
+                        <ul class="space-y-4">
+                            <li class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-600 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">ค่ายวิชาการและการแพทย์</div>
+                                <div class="text-sm text-slate-600 mt-1">
+                                    - ผ่านการคัดเลือกเข้าค่ายแพทยศาสตร์ ม.ขอนแก่น (THE KOOKKU DAY CAMP 2025)<br>
+                                    - ค่ายเภสัชศาสตร์ ม.อุบลราชธานี (PHARM CAMP UBU 2025)<br>
+                                    - นำเสนอโครงการ ณ คณะวิทยาศาสตร์ ม.มหิดล (Alpha Student)
+                                </div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">ฝึกประสบการณ์วิชาชีพด้านสาธารณสุข</div>
+                                <div class="text-sm text-slate-600 mt-1">ณ โรงพยาบาลบรบือ เพื่อเรียนรู้การทำงานจริงในสายงานด้านสุขภาพ</div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">ประธานกีฬาสี (สีฟ้า) ประจำปี 2025</div>
+                                <div class="text-sm text-slate-600 mt-1">ฝึกความเป็นผู้นำ การบริหารจัดการ และการทำงานร่วมกับผู้อื่นในระดับองค์กรใหญ่</div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">หัวหน้าห้องเรียน (ม.1 - ม.6)</div>
+                                <div class="text-sm text-slate-600 mt-1">รับผิดชอบดูแลความเป็นระเบียบและประสานงานระหว่างครูและนักเรียนอย่างต่อเนื่อง</div>
+                            </li>
+                            <li class="bg-white p-4 rounded-lg border border-slate-200 hover:shadow-md transition">
+                                <div class="font-bold text-slate-800">ผู้ช่วยวิทยากร ค่ายวิชาการ STEM</div>
+                                <div class="text-sm text-slate-600 mt-1">ณ โรงเรียนวังไฮวังทอง และ โรงเรียนบ้านหนองแคนโนนงามโชคชัย</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- Activities Column -->
-                <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
-                        <div class="bg-accent p-2 rounded-lg text-primary">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">กิจกรรม ค่ายวิชาการ และจิตอาสา</h3>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="relative pl-6 border-l-2 border-secondary/30">
-                            <div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary"></div>
-                            <h4 class="font-bold text-gray-800">ฝึกประสบการณ์วิชาชีพด้านสาธารณสุข</h4>
-                            <p class="text-sm text-gray-600 mt-1">ณ โรงพยาบาลบรบือ ได้เรียนรู้กระบวนการทำงานและให้บริการผู้ป่วยเบื้องต้น</p>
-                        </div>
-
-                        <div class="relative pl-6 border-l-2 border-secondary/30">
-                            <div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary"></div>
-                            <h4 class="font-bold text-gray-800">ค่าย THE KOOKKU DAY CAMP: CHAPTER ONE ก้าวแรกของความฝัน</h4>
-                            <p class="text-sm text-gray-600 mt-1">คณะแพทยศาสตร์ มหาวิทยาลัยขอนแก่น (ผ่านการสอบวัดความรู้เพื่อเข้าค่าย)</p>
-                            <span class="inline-block px-2.5 py-0.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-md mt-2">ปี 2568</span>
-                        </div>
-
-                        <div class="relative pl-6 border-l-2 border-secondary/30">
-                            <div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary"></div>
-                            <h4 class="font-bold text-gray-800">ค่าย PHARM CAMP UBU 2025 "เส้นทางสู่ฝัน ให้ฉันเป็นเภสัชกร"</h4>
-                            <p class="text-sm text-gray-600 mt-1">คณะเภสัชศาสตร์ มหาวิทยาลัยอุบลราชธานี</p>
-                            <span class="inline-block px-2.5 py-0.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-md mt-2">ปี 2568</span>
-                        </div>
-
-                        <div class="relative pl-6 border-l-2 border-secondary/30">
-                            <div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary"></div>
-                            <h4 class="font-bold text-gray-800">The Final Camp for Alpha Student Scholarship</h4>
-                            <p class="text-sm text-gray-600 mt-1">คณะวิทยาศาสตร์ มหาวิทยาลัยมหิดล นำเสนอโครงการเรื่อง "ระบบจัดการน้ำเสียชุมชนอัจฉริยะด้วยเทคโนโลยีชีวภาพและ IoT"</p>
-                        </div>
-                        
-                        <div class="relative pl-6 border-l-2 border-secondary/30">
-                            <div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary"></div>
-                            <h4 class="font-bold text-gray-800">ผู้นำนักเรียนและประธานสี</h4>
-                            <p class="text-sm text-gray-600 mt-1">ประธานกีฬาสี สีฟ้า (ปี 2568) และหัวหน้าห้องเรียนต่อเนื่องตั้งแต่ ม.1-ม.6 ช่วยฝึกฝนความเป็นผู้นำและการบริหารจัดการ</p>
-                        </div>
-
-                        <div class="relative pl-6 border-l-2 border-secondary/30">
-                            <div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary"></div>
-                            <h4 class="font-bold text-gray-800">ผู้ช่วยวิทยากร โครงการค่ายวิชาการ STEM</h4>
-                            <p class="text-sm text-gray-600 mt-1">ณ โรงเรียนบ้านวังไฮวังทอง และ โรงเรียนบ้านหนองแคนโนนงามโชคชัย</p>
-                            <span class="inline-block px-2.5 py-0.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-md mt-2">ปี 2567</span>
-                        </div>
-                    </div>
+                <div class="mt-10 pt-6 border-t border-slate-200 text-left">
+                    <button onclick="showPage('page-education')" class="text-blue-600 hover:text-blue-800 font-medium px-4 py-2"><i class="fas fa-arrow-left mr-2"></i> ย้อนกลับไปประวัติการศึกษา</button>
                 </div>
-
-            </div>
-            
-            <div class="mt-8">
-                <button onclick="showPage('education')" class="inline-flex items-center gap-2 text-gray-500 hover:text-primary px-4 py-2 font-medium transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    กลับไปประวัติการศึกษา
-                </button>
             </div>
         </section>
 
     </main>
 
-    <footer class="mt-auto py-6 text-center text-gray-400 text-sm border-t border-gray-200 bg-white">
-        <p>&copy; <span id="year"></span> Tidsawan Srisat. Academic Portfolio.</p>
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-blue-200 text-center py-6 mt-8">
+        <p class="text-sm">&copy; 2026 Tidsawan Srisat. All Rights Reserved.</p>
     </footer>
 
+    <!-- JavaScript for Page Navigation -->
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.add('hidden');
-        }
-
         function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
             });
-
-            document.getElementById('page-' + pageId).classList.add('active');
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            document.getElementById('nav-' + pageId).classList.add('active');
             
-            window.scrollTo(0, 0);
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav styling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.getAttribute('data-target') === pageId) {
+                    btn.classList.add('text-blue-300', 'border-b-2', 'border-blue-300');
+                } else {
+                    btn.classList.remove('text-blue-300', 'border-b-2', 'border-blue-300');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize active nav button
+        document.querySelector('[data-target="page-home"]').classList.add('text-blue-300', 'border-b-2', 'border-blue-300');
     </script>
 </body>
 </html>
